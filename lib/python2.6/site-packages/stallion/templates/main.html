@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Stallion, package manager for Python</title>
+  <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.7.1.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='bootstrap-modal.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='bootstrap-buttons.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+  <link href="{{ url_for('static', filename='extra.css') }}" rel="stylesheet">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  {% block js %}{% endblock %}
+</head>
+
+<body>
+    <div class="topbar" data-scrollspy="scrollspy" >
+      <div class="topbar-inner">
+        <div class="container">
+          <a class="brand" href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='stallion_icon.png') }}" class="midicon"> Stallion</a>
+          <ul class="nav">
+            <li class="{{ menu_home }}"><a href="{{ url_for('index') }}">Home</a></li>
+            <li class="{{ menu_about }}"><a href="{{ url_for('about') }}">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+	<div class="container-fluid">
+	<div class="sidebar">
+		<div align="center"><a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='box.png') }}"></a></div>
+		<div class="page-header">
+		<h3>Packages</h3>
+		</div>
+		{% for dist in distributions|sort(attribute="project_name") %}
+			<img src="{{ url_for('static', filename='box-icon.png') }}" class="midicon">
+			<a href="{{ url_for('distribution', dist_name=dist.key) }}">{{ dist.project_name }} {{ dist.version }}</a> <br/>
+		{% endfor %}
+	</div>
+
+	<div class="content">
+		<div class="page-header">
+			<h1>Stallion<small> A Package Manager for Python</small></h1>
+		</div>
+
+		<ul class="breadcrumb">
+			{% for path in breadpath %}
+				{% if loop.last %}
+					<li class="active">{{ path.title }}</li>
+				{% else %}
+					<li><a href="{{ path.href }}">{{ path.title }}</a> <span class="divider">/</span></li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+		<div class="page-header">
+		<h2>{% block section_title %}{% endblock %}</h2>
+		</div>
+		<p>
+		{% block content %}{% endblock %}
+		</p>
+
+
+    <footer class="footer">
+        <p>
+		Created by <em>Christian S. Perone</em> 2011 <a href="http://twitter.com/tarantulae" target="_blank">@tarantulae</a>, <a href="http://pyevolve.sourceforge.net/wordpress" target="_blank">Pyevolve Blog</a>.<br />
+
+		  Code licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">
+		  Apache License v2.0</a>.
+        </p>
+    </footer>
+
+	</div>
+
+
+</div>
+
+
+
+</body>
+</html>

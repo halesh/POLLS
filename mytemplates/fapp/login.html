@@ -1,0 +1,11 @@
+{% if error %}
+ 
+{{ error }}
+ 
+{% endif %}
+
+<form action="" method="post">
+{{ form.as_p }}
+<input type="submit" value="Login" />
+<a href="/register">Sign Up</a>
+</form>

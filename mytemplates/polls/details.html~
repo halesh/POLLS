@@ -1,0 +1,28 @@
+<html>
+<body><title>Choice List</title>
+{% if latest_choise_list %}
+    <table border="1pt">
+    <form>
+        <tr align="center"><td>CHOICE</td><td>VOTE</td>
+        <tr align="center">
+            <td>
+                <select>
+                    {% for choice in latest_choise_list %}
+                    <option value={{choice.choice}}>{{choice.choice}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <select>
+                   {% for choice in latest_choise_list %}
+                   <option value={{choice.vote}}>{{choice.vote}}</option>
+                   {% endfor %}
+                </select>
+        </tr>
+    </form>
+    </table>
+{% else %}
+    <p>No Choice.</p>
+{% endif %}
+</body>
+</html>

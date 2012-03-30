@@ -1,0 +1,18 @@
+<html>
+<body><title>Polls List</title>
+{% if latest_poll_list %}
+    <table>
+    {% for poll in latest_poll_list %}
+        <tr>
+            <td align="right"><a href="/polls/{{ poll.id }}/">{{ poll.question }}</a></td>
+            <td>{{poll.pub_date}}</td>
+            <td>{{poll.choice}}</td>
+            <td>{{poll.votes}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+</body>
+</html>

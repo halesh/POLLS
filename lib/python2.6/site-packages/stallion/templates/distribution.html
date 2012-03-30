@@ -1,0 +1,84 @@
+{% extends "main.html" %}
+
+{% block js %}
+<script type="text/javascript">
+
+ $(document).ready(function() {
+
+    $('#modal-update').modal({
+	    keyboard: true
+    });
+
+	$('#btn_check_updates').button()
+
+	$('#btn_check_updates').click(function() {
+		$('#btn_check_updates').button('loading');
+
+		$.get('/pypi/releases/{{ dist.project_name }}', function(data) {
+			$('#modal-update').html(data);
+			$('#modal-update').modal('show');
+			$('#btn_check_updates').button('reset');
+		});
+
+	});
+
+ });
+
+
+</script>
+{% endblock %}
+
+
+{% block section_title %}
+	<img src="{{ url_for('static', filename='terminal-icon.png') }}" class="midicon"> {{ dist.project_name }} 
+	<small>version {{ dist.version }}</small><br/>
+	{% if distinfo.summary %}<small>{{ distinfo.summary }}</small>{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div id="modal-update" class="modal hide fade">
+	<div class="modal-header">
+		<a href="#" class="close">&times;</a>
+		<h3>Update information <small>(PyPI Repository)</small></h3>
+	</div>
+	<div class="modal-body" id="modal-update-body"></div>
+	<div class="modal-footer">
+		<a id="btn_dismiss" href="#" class="btn primary">Dismiss</a>
+	</div>
+</div>
+
+<div class="row">
+	<div class="span8">
+
+	<div class="well" style="padding: 10px 12px;">
+		<div class="page-header"><h3>Available Actions</h3></div>
+		<button class="btn primary" id="btn_check_updates" data-loading-text="Checking...">Check updates</button>
+	</div>
+
+	{% if  description_render %}
+		{{ description_render|safe }}
+		<br /> <br />
+	{% else %}
+		<div class="alert-message block-message error">
+			<p><strong>No description information available !</strong> Stallion wasn't able to find 
+			the description information.</p><br />
+			<ul>
+			  <li>The package probably doesn't have the <strong>Description</strong> field metadata.</li>
+			  <li>Stallion wasn't able to find the <strong>PKG-INFO</strong> metadata.</li>
+			</ul>
+		</div>
+	{% endif %}
+
+	</div>
+	<div class="span8">
+		<div class="well" style="padding: 14px 19px;">
+			<div class="page-header"><h2><img src="{{ url_for('static', filename='info.png') }}" class="midicon"> Package information</h2><br /></div>
+
+				{% include 'metadata.html' %}
+
+		</div>
+	</div>
+</div>
+
+{% endblock %}

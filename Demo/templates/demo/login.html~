@@ -1,0 +1,11 @@
+<html>
+<h1>Hello Powernote</h1>
+</head>
+<link rel=StyleSheet href="bootstrap/css/bootstrap.min.css" TYPE="text/css" MEDIA=screen>
+</head>
+<form action="." method="post">
+{{ form.as_p }}
+<input type="submit" value="Login" />
+</form>
+
+</html>
